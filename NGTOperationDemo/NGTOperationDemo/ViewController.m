@@ -29,12 +29,15 @@
     __weak typeof(self) weakSelf = self;
     _op = [NGTOperation operationWithExecuteBlock:^(NGTOperation *aOp) {
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.op start];
-        });
+
         NSLog(@"1");
     }];
-    
+//    _op.autoFinish = NO;
+    NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"block");
+    }];
+    [op1 addDependency:_op];
+    [_opQueue addOperation:op1];
     [_opQueue addOperation:_op];
     // Do any additional setup after loading the view, typically from a nib.
 }

@@ -11,6 +11,14 @@
 @implementation NGTOperation
 @synthesize executing = _executing;
 @synthesize finished = _finished;
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _autoFinish = YES;
+    }
+    return self;
+}
 + (NGTOperation *)operationWithExecuteBlock:(void(^)(NGTOperation *))block{
     NGTOperation *operation = [[NGTOperation alloc] init];
     operation.executeBlock = [block copy];
@@ -34,6 +42,10 @@
     self.finished = NO;
     if (self.executeBlock) {
         self.executeBlock(self);
+    }
+    
+    if (self.isAutoFinish) {
+        [self finish];
     }
 }
 - (void)finish{

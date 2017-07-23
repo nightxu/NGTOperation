@@ -10,6 +10,8 @@
 
 @interface NGTOperation : NSOperation
 
+@property (assign, nonatomic, getter = isAutoFinish) BOOL autoFinish;
+
 @property (assign, nonatomic, getter = isExecuting) BOOL executing;
 
 @property (assign, nonatomic, getter = isFinished) BOOL finished;
